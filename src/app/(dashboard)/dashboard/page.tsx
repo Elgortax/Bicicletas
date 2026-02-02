@@ -1,8 +1,13 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@prisma/client";
 import { getCurrentUser } from "@/lib/auth";
 import { SlotGrid } from "@/components/slot-grid";
 import { LogoutButton } from "@/components/logout-button";
+
+type SlotWithOccupant = Prisma.BikeSlotGetPayload<{
+  include: { occupant: { select: { id: true; fullName: true; bikeNumber: true } } };
+}>;
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
@@ -10,7 +15,7 @@ export default async function DashboardPage() {
     redirect("/login?from=dashboard");
   }
 
-  const slots = await prisma.bikeSlot.findMany({
+  const slots: SlotWithOccupant[] = await prisma.bikeSlot.findMany({
     orderBy: { label: "asc" },
     include: { occupant: { select: { id: true, fullName: true, bikeNumber: true } } },
   });
