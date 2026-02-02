@@ -21,7 +21,7 @@ Aplicación sencilla para registrar usuarios y asignar espacios de bicicletas de
 4. Aplica el esquema y genera el cliente local  
    `npm run db:push`
 5. Pobla datos de prueba (contra la base local o Turso si tienes las variables configuradas)  
-   `npm run db:seed` → crea al usuario `admin@duoc.cl / Cambiar123!`.
+   `npm run db:seed`.
 6. Levanta el entorno de desarrollo  
    `npm run dev` y visita http://localhost:3000.
 
