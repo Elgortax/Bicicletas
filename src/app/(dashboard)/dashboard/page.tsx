@@ -15,9 +15,15 @@ export default async function DashboardPage() {
     include: { occupant: { select: { id: true, fullName: true, bikeNumber: true } } },
   });
 
-  type SlotWithOccupant = (typeof slots)[number];
+  type SerializedSlot = {
+    id: number;
+    label: string;
+    occupied: boolean;
+    occupantId: string | null;
+    occupant: { id: string; fullName: string; bikeNumber: string } | null;
+  };
 
-  const serializedSlots = slots.map((slot: SlotWithOccupant) => ({
+  const serializedSlots: SerializedSlot[] = slots.map((slot) => ({
     id: slot.id,
     label: slot.label,
     occupied: slot.occupied,
