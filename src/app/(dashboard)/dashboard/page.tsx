@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import type { Prisma } from "@prisma/client";
 import { getCurrentUser } from "@/lib/auth";
 import { SlotGrid } from "@/components/slot-grid";
 import { LogoutButton } from "@/components/logout-button";
