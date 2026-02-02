@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
-import type { User } from "@prisma/client";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { prisma } from "./prisma";
@@ -16,11 +15,11 @@ export async function verifyPassword(password: string, passwordHash: string) {
   return bcrypt.compare(password, passwordHash);
 }
 
-export async function createSessionToken(user: Pick<User, "id" | "fullName" | "role">) {
-  const payload = {
+export async function createSessionToken(user: SessionUserPayload) {
+  const payload: SessionPayload = {
     sub: user.id,
     name: user.fullName,
-    role: user.role,
+    role: user.role as UserRole,
   };
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
@@ -84,6 +83,8 @@ export async function requireUser() {
   }
   return user;
 }
+
+type SessionUserPayload = { id: string; fullName: string; role: string };
 
 type SessionPayload = {
   sub?: string;
