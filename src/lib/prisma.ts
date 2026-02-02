@@ -1,3 +1,4 @@
+// @ts-ignore PrismaClient está disponible en la build edge aunque no tenga typings.
 import { PrismaClient } from "@prisma/client/edge";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 
