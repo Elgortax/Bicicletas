@@ -93,7 +93,8 @@ async function fetchSlots() {
     orderBy: { label: "asc" },
     include: { occupant: { select: { id: true, fullName: true, bikeNumber: true } } },
   });
-  return slots.map((slot) => ({
+  type SlotRecord = (typeof slots)[number];
+  return slots.map((slot: SlotRecord) => ({
     id: slot.id,
     label: slot.label,
     occupied: slot.occupied,
