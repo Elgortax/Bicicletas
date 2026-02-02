@@ -23,7 +23,9 @@ export default async function DashboardPage() {
     occupant: { id: string; fullName: string; bikeNumber: string } | null;
   };
 
-  const serializedSlots: SerializedSlot[] = slots.map((slot) => ({
+  type SlotRecord = (typeof slots)[number];
+
+  const serializedSlots: SerializedSlot[] = slots.map((slot: SlotRecord) => ({
     id: slot.id,
     label: slot.label,
     occupied: slot.occupied,
