@@ -5,22 +5,20 @@ import { getCurrentUser } from "@/lib/auth";
 import { SlotGrid } from "@/components/slot-grid";
 import { LogoutButton } from "@/components/logout-button";
 
-type SlotWithOccupant = Prisma.BikeSlotGetPayload<{
-  include: { occupant: { select: { id: true; fullName: true; bikeNumber: true } } };
-}>;
-
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) {
     redirect("/login?from=dashboard");
   }
 
-  const slots: SlotWithOccupant[] = await prisma.bikeSlot.findMany({
+  const slots = await prisma.bikeSlot.findMany({
     orderBy: { label: "asc" },
     include: { occupant: { select: { id: true, fullName: true, bikeNumber: true } } },
   });
 
-  const serializedSlots = slots.map((slot) => ({
+  type SlotWithOccupant = (typeof slots)[number];
+
+  const serializedSlots = slots.map((slot: SlotWithOccupant) => ({
     id: slot.id,
     label: slot.label,
     occupied: slot.occupied,
