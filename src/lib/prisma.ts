@@ -1,5 +1,5 @@
-// @ts-ignore PrismaClient está disponible en la build edge aunque no tenga typings.
-import { PrismaClient } from "@prisma/client/edge";
+// @ts-ignore PrismaClient se genera en tiempo de build de Prisma.
+import { PrismaClient } from "@prisma/client";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 
 const libsqlUrl = process.env.TURSO_DATABASE_URL;
